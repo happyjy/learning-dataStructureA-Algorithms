@@ -10,6 +10,18 @@ function SinglyLinkedListNode(data) {
   this.next = null;
 }
 
+/**
+ * insert
+ * insertAtHead
+ * insertAtTail
+ * remove
+ * removeAt
+ * removeAtHead
+ * removeAtTail
+ * print
+ * getPrototypeList
+ */
+
 class SinglyLinkedList {
   constructor() {
     this.head = null;
@@ -20,57 +32,130 @@ class SinglyLinkedList {
     return this.size == 0;
   }
 
-  insert(value) {
-    // Linked List head 유무에 따라서 insert 로직이 달라진다.
-    // debugger;
+  //원하는 위치에 insert
+  insert(position, value) {
+    if (position >= 0 && position <= this.size) {
+      let newNode = new SinglyLinkedListNode(value),
+        currNode = this.head,
+        prevNode,
+        nextNode, // 명시적인 이해를 위해서 추가
+        index = 0;
+
+      if (position === 0) {
+        newNode.next = currNode;
+        this.head = newNode;
+      } else {
+        while (index++ < position) {
+          prevNode = currNode;
+          currNode = currNode.next;
+        }
+        nextNode = currNode;
+
+        newNode.next = nextNode;
+        prevNode.next = newNode;
+      }
+      this.size++;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  insertAtHead(value) {
+    // Linked List head 유무에 따라서 insertAtHead 로직이 달라진다.
+    const newNode = new SinglyLinkedListNode(value);
+
     if (this.head === null) {
-      this.head = new SinglyLinkedListNode(value);
+      this.head = newNode;
     } else {
       //기존에 있던 head를 추가할 Node next로 옮긴다.
       //추가할 Node -> 기존 head
       const temp = this.head;
-      this.head = new SinglyLinkedListNode(value);
+      this.head = newNode;
       this.head.next = temp;
+    }
+
+    this.size++;
+  }
+
+  insertAtTail(value) {
+    const newNode = new SinglyLinkedListNode(value);
+    let currNode;
+
+    if (this.head === null) {
+      this.head = newNode;
+    } else {
+      currNode = this.head;
+      //tail까지 이동
+      while (currNode.next) {
+        currNode = currNode.next;
+      }
+      currNode.next = newNode;
     }
     this.size++;
   }
 
+  //Node 값 기준으로 삭제
   remove(value) {
     //지우려고 하는 value가 아래와 같이 세가지 경우로 나뉠 수 있다.
     //1. head
     //2. !(head || tail): value를 Node를 순회한다.
     //3. tail
-    let currentHead = this.head;
-    if (currentHead.data == value) {
+    let currNode = this.head;
+    if (currNode.data == value) {
       // 1. head
-      this.head = currentHead.next;
+      this.head = currNode.next;
       this.size--;
     } else {
-      let prev = currentHead;
-      while (currentHead.next) {
+      let prevNode = currNode;
+      while (currNode.next) {
         // 2. !(head || tail)
-        if (currentHead.data == value) {
-          //삭제 대상 Node: "currentHead"
-          debugger;
-          prev.next = currentHead.next;
-          // prev = currentHead; //[&&&]이 코드는 필요 없어 보임...
-          currentHead = currentHead.next; //[&&&]아래 두 code는 break 되고 3.tail 조건에 만족하기 때문에 필요한 코드
+        if (currNode.data == value) {
+          //삭제 대상 Node: "currNode"
+          prevNode.next = currNode.next;
+          // prevNode = currNode; //[&&&]이 코드는 필요 없어 보임...
+          currNode = currNode.next; //[&&&]아래 두 code는 break 되고 3.tail 조건에 만족하기 때문에 필요한 코드
           break;
         }
         //Node 이동
-        prev = currentHead;
-        currentHead = currentHead.next;
+        prevNode = currNode;
+        currNode = currNode.next;
       }
       // 3. tail
-      if (currentHead.data == value) {
-        prev.next = null;
+      if (currNode.data == value) {
+        prevNode.next = null;
       }
 
       this.size--;
     }
   }
 
-  deleteAtHead() {
+  //Node 위치 기준으로 삭제
+  removeAt(position) {
+    if (position > -1 && position < this.size) {
+      let currNode = this.head,
+        prevNode,
+        index = 0;
+
+      if (position === 0) {
+        this.head = currNode.next;
+      } else {
+        while (index++ < position) {
+          prevNode = currNode;
+          currNode = currNode.next;
+        }
+
+        // 현재 노드의 다음과 이전 것을 연결(삭제)
+        prevNode.next = currNode.next;
+      }
+      this.size--;
+      return currNode.data;
+    } else {
+      return null;
+    }
+  }
+
+  removeAtHead() {
     let headData = null;
 
     if (this.head !== null) {
@@ -82,16 +167,44 @@ class SinglyLinkedList {
     return headData;
   }
 
-  print() {
-    let printArr = [];
-    let currentHead = this.head;
-
-    while (currentHead.next != null) {
-      printArr.push(currentHead.data);
-      currentHead = currentHead.next;
+  removeAtTail() {
+    let headData = null;
+    if (this.head !== null) {
+      let currNode = this.head,
+        prevNode = this.head;
+      //tail까지 이동
+      if (!currNode.next) {
+        while (currNode.next) {
+          prevNode = currNode;
+          currNode = currNode.next;
+        }
+        //제일 마지막 노드의 이전 노드에서 마지막노드를 끊음
+        prevNode.next = currNode.next;
+      } else {
+        //노드가 하나 밖에 없을때
+        this.head = null;
+      }
+      headData = currNode.data;
     }
-    if (currentHead.next == null) {
-      printArr.push(currentHead.data);
+    this.size--;
+    return headData;
+  }
+
+  print() {
+    console.log(`--------------------------------------------------------`);
+    let printArr = [];
+    let currNode = this.head;
+
+    if (currNode != null) {
+      while (currNode.next != null) {
+        printArr.push(currNode.data);
+        currNode = currNode.next;
+      }
+      if (currNode.next == null) {
+        printArr.push(currNode.data);
+      }
+    } else {
+      printArr.push('empty');
     }
 
     if (arguments.length >= 1) {
@@ -100,10 +213,14 @@ class SinglyLinkedList {
       if (typeof arg === 'string') {
         msg = arg;
         console.log(`### PRINT - ${msg}: `, printArr.join(' -> '));
+        console.log(`--------------------------------------------------------`);
+        console.log('');
         return;
       }
     }
     console.log(`### PRINT: `, printArr.join(' -> '));
+    console.log(`--------------------------------------------------------`);
+    console.log('');
   }
 
   getPrototypeList() {
@@ -111,34 +228,56 @@ class SinglyLinkedList {
   }
 }
 
+debugger;
+
 const sll = new SinglyLinkedList();
-sll.insert(10); //Linked List Node Status: 10 -> null
-sll.insert(20); //Linked List Node Status: 20 -> 10 -> null
-sll.insert(30); //Linked List Node Status: 30 -> 20 -> 10 -> null
+sll.insertAtHead(10); //Linked List Node Status: 10 -> null
+sll.insertAtHead(20); //Linked List Node Status: 20 -> 10 -> null
+sll.insertAtHead(30); //Linked List Node Status: 30 -> 20 -> 10 -> null
 sll.print('end of sll');
 
-// debugger;
 const sll1 = new SinglyLinkedList();
-sll1.insert(10); //Linked List Node Status: 10 -> null
-sll1.insert(20); //Linked List Node Status: 20 -> 10 -> null
-sll1.insert(30); //Linked List Node Status: 30 -> 20 -> 10 -> null
-sll1.insert(31); //Linked List Node Status: 31 -> 30 -> 20 -> 10 -> null
-sll1.insert(32); //Linked List Node Status: 32 -> 31 -> 30 -> 20 -> 10 -> null
-sll1.insert(40); //Linked List Node Status: 40 -> 32 -> 31 -> 30 -> 20 -> 10 -> null
-sll1.print('end of insert sll1');
+sll1.insertAtHead(10); //Linked List Node Status: 10 -> null
+sll1.insertAtHead(20); //Linked List Node Status: 20 -> 10 -> null
+sll1.insertAtHead(30); //Linked List Node Status: 30 -> 20 -> 10 -> null
+sll1.insertAtHead(31); //Linked List Node Status: 31 -> 30 -> 20 -> 10 -> null
+sll1.insertAtHead(32); //Linked List Node Status: 32 -> 31 -> 30 -> 20 -> 10 -> null
+sll1.insertAtHead(40); //Linked List Node Status: 40 -> 32 -> 31 -> 30 -> 20 -> 10 -> null
+sll1.print('end of insertAtHead sll1');
 
 sll1.remove(32); //Linked List Node Status: 40 -> 31 -> 30 -> 20 -> 10 -> null
 sll1.remove(31); //Linked List Node Status: 40 -> 30 -> 20 -> 10 -> null
 sll1.remove(30); //Linked List Node Status: 40 -> 20 -> 10 -> null
-sll1.print('end of remove sll1');
-// debugger;
+sll1.print('end of remove sll1 - remove');
 
+sll1.removeAtTail();
+sll1.removeAtTail();
+sll1.removeAtTail();
+sll1.print('end of remove sll1 - removeAtTail');
+
+``;
 var sll2 = new SinglyLinkedList();
-sll2.insert(1); // Linked List Node Status:  1 -> null
-sll2.insert(12); // Linked List Node Status: 12 -> 1 -> null
-sll2.insert(20); // Linked List Node Status: 20 -> 12 -> 1 -> null
-sll2.deleteAtHead(); // Linked List Node Status:  12 -> 1 -> null
+sll2.insertAtHead(1); // Linked List Node Status:  1 -> null
+sll2.insertAtHead(12); // Linked List Node Status: 12 -> 1 -> null
+sll2.insertAtHead(20); // Linked List Node Status: 20 -> 12 -> 1 -> null
+sll2.removeAtHead(); // Linked List Node Status:  12 -> 1 -> null
 sll2.print('end of sll2');
 
-sll2.getPrototypeList();
-// debugger;
+sll2.removeAt(0);
+sll2.print('sll2 - removeAt');
+sll2.removeAt(0);
+sll2.print('sll2 - removeAt');
+sll2.removeAt(0);
+sll2.print('sll2 - removeAt');
+
+var sll3 = new SinglyLinkedList();
+sll3.insertAtTail(10);
+sll3.insertAtTail(20);
+sll3.insertAtTail(30);
+sll3.print('sll3 - insertAtTail');
+sll3.insertAtHead(100);
+sll3.insertAtHead(200);
+sll3.insertAtHead(300);
+sll3.print('sll3 - insertAtHead');
+
+sll3.getPrototypeList();
