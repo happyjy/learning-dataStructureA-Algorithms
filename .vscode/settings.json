@@ -1,0 +1,6 @@
+{
+  "eslint.enalbe": true,
+  "editor.CodeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}

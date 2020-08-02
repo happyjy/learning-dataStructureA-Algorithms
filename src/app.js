@@ -1,9 +1,5 @@
-import a from "./dataStructure";
+import SinglyLinkedList from './01.SinglyLinkedList';
+import DoublyLinkedList from './02.DoublyLinkedList';
+// import LL from './LL';
 
-console.log("### app.js");;;
-a();;;;;
-
-console.log();
-(function () {})();
-
-foo(abc(), bbc());
+// console.log('### app.js1');

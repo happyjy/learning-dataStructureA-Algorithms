@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "bundle": "webpack --watch --mode development",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,16 +15,21 @@
   "devDependencies": {
     "eslint-plugin-prettier": "^3.1.4",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "eslint": "^7.6.0",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5"
   },
   "huksy": {
     "hooks": {
-      "pre-commit": "echo \"이것은 커밋전에 출력\""
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": "npm run lint"
   }
 }
