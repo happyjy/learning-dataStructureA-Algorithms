@@ -32,7 +32,7 @@ class SinglyLinkedList {
     return this.size == 0;
   }
 
-  //원하는 위치에 insert
+  // 원하는 위치에 insert
   insert(position, value) {
     if (position >= 0 && position <= this.size) {
       let newNode = new SinglyLinkedListNode(value),
@@ -95,7 +95,7 @@ class SinglyLinkedList {
     this.size++;
   }
 
-  //Node 값 기준으로 삭제
+  // Node 값 기준으로 삭제
   remove(value) {
     //지우려고 하는 value가 아래와 같이 세가지 경우로 나뉠 수 있다.
     //1. head
@@ -130,7 +130,7 @@ class SinglyLinkedList {
     }
   }
 
-  //Node 위치 기준으로 삭제
+  // Node 위치 기준으로 삭제
   removeAt(position) {
     if (position > -1 && position < this.size) {
       let currNode = this.head,
