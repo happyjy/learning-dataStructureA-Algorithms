@@ -13,10 +13,21 @@ class DoublyLinkedListNode {
  * insert
  * insertAtHead
  * insertAtTail
+ *
+ * deleteAtHead
+ * delete
+ * recursiveDelFromHead
+ * recursiveDelFromTail
+ *
+ * deleteAt
  * deleteAtHead
  * deleteAtTail
+ *
  * findStartingHead
  * findStartingTail
+ * printFromHead
+ * printFromTail
+ * isSameHeadTailStatus
  */
 class DoublyLinkedList {
   constructor(data) {
@@ -105,11 +116,11 @@ class DoublyLinkedList {
   }
 
   // Node 값 기준으로 삭제
-  // [ ] 개선필요
   delete(value) {
     this.recursiveDelFromHead(this.head, value);
     this.recursiveDelFromTail(this.tail, value);
   }
+
   recursiveDelFromHead(node, value) {
     let currNode = node;
 
