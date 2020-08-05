@@ -219,8 +219,243 @@ class BinarySearchTree extends BinaryTree {
 }
 
 const bst1 = new BinarySearchTree();
-bst1.insert(1);
-bst1.insert(3);
-bst1.insert(2);
+
+console.log('### insert');
+console.log(bst1.insert(2));
+console.log(bst1.insert(1));
+console.log(bst1.insert(4));
+console.log(bst1.insert(3));
+console.log(bst1.insert(5));
+
+/*
+      2
+     / \
+    1   4
+       / \
+      3   5
+*/
+
+console.log('### findeNode');
 console.log(bst1.findNode(3)); // true
-console.log(bst1.findNode(5)); // false
+console.log(bst1.findNode(5)); // true
+console.log(bst1.findNode(10)); // false
+
+// 두개 노드의 같은 root node 찾기
+function findLowestCommonAncestor(root, value1, value2) {
+  function findLowestCommonAncestorHelper(root, value1, value2) {
+    if (!root) return;
+    //[point] 조건문
+    if (Math.max(value1, value2) < root.value)
+      return findLowestCommonAncestorHelper(root.left, value1, value2);
+    //[point] 조건문
+    if (Math.min(value1, value2) > root.value)
+      return findLowestCommonAncestorHelper(root.right, value1, value2);
+    return root.value;
+  }
+  return findLowestCommonAncestorHelper(root, value1, value2);
+}
+
+// debugger;
+console.log('### findLowestCommonAncestor');
+console.log(findLowestCommonAncestor(bst1._root, 1, 4));
+console.log(findLowestCommonAncestor(bst1._root, 3, 5));
+console.log(findLowestCommonAncestor(bst1._root, 2, 3));
+console.log(findLowestCommonAncestor(bst1._root, 4, 5));
+
+//N level 노드 구하기
+function printNthLevels(root, n = 0) {
+  let arrayNth = [];
+  queue = [];
+
+  if (!root) return;
+
+  queue.push([root, 0]);
+  while (queue.length) {
+    let tuple = queue.shift(),
+      temp = tuple[0],
+      height = tuple[1];
+
+    if (height == n) {
+      arrayNth.push([temp.left, ++height]);
+    }
+    if (temp.left) queue.push([temp.left, height + 1]);
+    if (temp.right) queue.push([temp.right, height + 1]);
+  }
+  console.log(`${n} 번째 level node list`);
+  console.log(arrayNth);
+}
+const bst2 = new BinarySearchTree();
+bst2.insert(5);
+bst2.insert(3);
+bst2.insert(7);
+bst2.insert(2);
+bst2.insert(4);
+bst2.insert(6);
+bst2.insert(8);
+
+/*
+      5
+     / \
+    3   7
+  / \  / \
+ 2  4 6  8
+*/
+// debugger;
+console.log('### printNthLevels');
+printNthLevels(bst2._root, 1);
+printNthLevels(bst2._root, 2);
+
+// * 주어진 두 트리가 구조가 같은지 확인
+// * return 문 예상 시나리오
+//   - root1, root2의 value가 같으면 해당 노드의 왼쪽을 recursive 하면서 모두 순회하면서 비교
+//   - 그리고 stack에서 빠져나오면 그 다음 조건인 노드의 오른쪽 조건을 확인한다.
+function isSameTree(root1, root2) {
+  if (root1 == null && root2 == null) return true;
+  if (root1 == null || root2 == null) return false;
+  return (
+    root1.value == root2.value &&
+    isSameTree(root1.left) === isSameTree(root2.left) &&
+    isSameTree(root1.right) === isSameTree(root2.right)
+  );
+}
+
+// isSameTree를 재귀 호출하면서 subTree가 root의 하위으 subTree인지 확인한다.
+function checkIfSubTree(root, subTree) {
+  var queue = [],
+    counter = 0;
+
+  if (!root) {
+    return;
+  }
+
+  queue.push(root);
+
+  while (queue.length) {
+    let temp = queue.shift();
+
+    if ((temp.data == subTree.data) === isSameTree(temp, subTree)) {
+      return true;
+    }
+
+    if (temp.left) {
+      queue.push(temp.left);
+    }
+    if (temp.right) {
+      queue.push(temp.right);
+    }
+  }
+  return false;
+}
+
+var node1 = {
+  value: 5,
+  left: {
+    value: 3,
+    left: {
+      value: 1,
+    },
+    right: {
+      value: 2,
+    },
+  },
+  right: {
+    value: 7,
+  },
+};
+
+var node2 = {
+  value: 3,
+  left: {
+    value: 1,
+  },
+  right: {
+    value: 2,
+  },
+};
+
+var node3 = {
+  value: 3,
+  left: {
+    value: 1,
+  },
+};
+
+/*
+    node1
+      5
+     / \
+    3   7
+   / \   
+  1  2   
+*/
+
+/*
+    node2
+      3
+     / \
+    1   2
+*/
+
+/*
+    node3
+      3
+     /
+    1   
+*/
+
+console.log('### checkIfSubTree 테스트');
+console.log(checkIfSubTree(node1, node2)); // true
+console.log(checkIfSubTree(node1, node3)); // false
+console.log(checkIfSubTree(node2, node3)); // false
+
+function isMirrorTrees(tree1, tree2) {
+  if (!tree1 && !tree2) {
+    return true;
+  }
+
+  if (!tree1 || !tree2) {
+    return false;
+  }
+
+  const checkLeftwithRight = isMirrorTrees(tree1.left, tree2.right),
+    checkRightwithLeft = isMirrorTrees(tree2.right, tree1.left);
+
+  return tree1.value == tree2.value && checkLeftwithRight && checkRightwithLeft;
+}
+
+var node1 = {
+  value: 3,
+  left: {
+    value: 1,
+  },
+  right: {
+    value: 2,
+  },
+};
+
+var node2 = {
+  value: 3,
+  left: {
+    value: 2,
+  },
+  right: {
+    value: 1,
+  },
+};
+
+var node3 = {
+  value: 3,
+  left: {
+    value: 1,
+  },
+  right: {
+    value: 2,
+    left: {
+      value: 2.5,
+    },
+  },
+};
+
+console.log('### isMirrorTrees 테스트');
+console.log(isMirrorTrees(node1, node2)); // true
+console.log(isMirrorTrees(node2, node3)); // false
