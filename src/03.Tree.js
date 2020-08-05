@@ -114,3 +114,113 @@ class BinaryTree {
     }
   }
 }
+
+// 이진트리
+// root보다 작으면 왼쪽, 크면 오른쪽 노드에 위치 한다.
+class BinarySearchTree extends BinaryTree {
+  constructor() {
+    super();
+    this._root = null;
+  }
+
+  insert(value) {
+    let thisNode = {
+      left: null,
+      right: null,
+      value: value,
+    };
+    if (!this._root) {
+      this._root = thisNode;
+    } else {
+      let currentRoot = this._root;
+      while (true) {
+        if (currentRoot.value > value) {
+          if (currentRoot.left != null) {
+            currentRoot = currentRoot.left;
+          } else {
+            currentRoot.left = thisNode;
+            break;
+          }
+        } else if (currentRoot.value < value) {
+          if (currentRoot.right != null) {
+            currentRoot = currentRoot.right;
+          } else {
+            currentRoot.right = thisNode;
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+    }
+  }
+
+  // 시간 복잡도(균형트리) O(log2(n))
+  // 시간 복잡도(불균형 트리) O(n)
+  remove(value) {
+    return deleteRecursively(this._root, value);
+
+    function deleteRecursively(root, value) {
+      if (!root) {
+        return null;
+      } else if (value < root.value) {
+        root.left = deleteRecursively(root.left, value);
+      } else if (value > root.value) {
+        root.right = deleteRecursively(root.right, value);
+      } else {
+        //value를 찾은 경우
+        //no child
+        if (!root.left && !root.right) {
+          //case1
+          return null;
+        } else if (!root.left) {
+          //case2
+          root = root.right;
+          return root;
+        } else if (!root.right) {
+          //case2
+          root = root.left;
+          return root;
+        } else {
+          //case3
+          //  - 자식 노드 두개 있는 경우 왼쪽 하위 트리의 최대치, 또는 오른쪽 하위 트리의 최소치를 찾아서 해당 노드 대체
+          let tempNode = this.findMin(root.right);
+          root.value = tempNode.value;
+          root.right = deleteRecursively(root.right, tempNode.value);
+          return root;
+        }
+      }
+    }
+  }
+
+  findMin(root) {
+    while (root.left) {
+      root = root.left;
+    }
+    return root;
+  }
+
+  findNode(value) {
+    let currentRoot = this._root,
+      found = false;
+    while (currentRoot) {
+      if (currentRoot.value > value) {
+        currentRoot = currentRoot.left;
+      } else if (currentRoot.value < value) {
+        currentRoot = currentRoot.right;
+      } else {
+        //노드 찾음
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+}
+
+const bst1 = new BinarySearchTree();
+bst1.insert(1);
+bst1.insert(3);
+bst1.insert(2);
+console.log(bst1.findNode(3)); // true
+console.log(bst1.findNode(5)); // false
