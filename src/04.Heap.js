@@ -2,10 +2,10 @@ console.log('### Heap');
 
 /**
  * 아래 세개의 기능이 구현 되어 있다. (MedianHeap 제외)
- * [o] # Heap
- * [o] # MinHeap
- * [o] # MaxHeap
- * [o] # 힙정렬
+ * [o] # 1.Heap
+ * [o] # 2.MinHeap
+ * [o] # 3.MaxHeap
+ * [o] # 4.힙정렬
  * 
  * # 연습 문제
  *  * 1.일련의 숫자에서 중간 값찾기
@@ -14,7 +14,7 @@ console.log('### Heap');
  * 
  */
 
-// # Heap
+// # 1.Heap
 function Heap() {
 	this.items = [];
 }
@@ -58,7 +58,7 @@ Heap.prototype.size = function() {
 	return this.items.length;
 };
 
-// # MinHeap
+// # 2.MinHeap
 function MinHeap() {
 	this.items = [];
 }
@@ -118,7 +118,7 @@ console.log(mh1.poll()); // 8, [8, 100, 10] -> poll -> [10, 100] -> bubbleDown -
 console.log(mh1.poll()); // 10, [10, 100] -> poll -> [100] -> bubbleDown -> [100]
 console.log(mh1.poll()); // 100, [100] -> poll -> [] -> bubbleDown -> []
 
-// # MaxHeap
+// # 3.MaxHeap
 function MaxHeap() {
 	this.items = [];
 }
@@ -174,7 +174,7 @@ console.log(mh2.poll()); // 8
 console.log(mh2.poll()); // 5
 console.log(mh2.poll()); // 1
 
-//# 힙정렬
+//# 4.힙정렬
 /**
  * # 정렬된 배열(Heap class add function으로 추가된 배열)을 
  *  pop()으로 호출하면서 꺼낸 객체를 저장하기만 하면 된다.
@@ -231,11 +231,11 @@ MedianHeap.prototype.push = function(value) {
 
 	// Re balancing
 	if (this.minHeap.size() - this.maxHeap.size() > 1) {
-		this.maxHeap.push(this.minHeap.poll());
+		this.maxHeap.add(this.minHeap.poll());
 	}
 
 	if (this.maxHeap.size() - this.minHeap.size() > 1) {
-		this.minHeap.push(this.maxHeap.poll());
+		this.minHeap.add(this.maxHeap.poll());
 	}
 };
 MedianHeap.prototype.median = function() {
@@ -265,21 +265,22 @@ console.log(medianH.median()); // 12.5
 // 연습문제 2.배열에서 K번째로 가장 작은 값 찾기
 const array1 = [ 12, 3, 13, 4, 2, 40, 23 ];
 function getKthSmallestElement(array, k) {
-	let minH = new MaxHeap();
+	var minH = new MinHeap();
 	array.forEach((el) => {
 		minH.add(el);
 	});
-
-	for (let i = 0; i < k; i++) {
+	//### 중요: 1부터 시작
+	for (var i = 1; i < k; i++) {
 		minH.poll();
 	}
 	return minH.poll();
 }
 debugger;
 console.log('연습문제 2.배열에서 K번째로 가장 작은 값 찾기');
-getKthSmallestElement(array1, 2); // 3
-getKthSmallestElement(array1, 1); // 2
-getKthSmallestElement(array1, 7); // 40
+//minH.items => "3,4,13,12,23,40"
+console.log(getKthSmallestElement(array1, 2)); // 3
+console.log(getKthSmallestElement(array1, 1)); // 2
+console.log(getKthSmallestElement(array1, 7)); // 40
 
 // 연습문제 3.배열에서 K번째로 가장 큰 값 찾기
 const array2 = [ 12, 3, 13, 4, 2, 40, 23 ];
@@ -290,12 +291,15 @@ function getKthBiggestElement(array, k) {
 	});
 
 	for (let i = 1; i < k; i++) {
-		maxH.pop();
+		maxH.poll();
 	}
-	return maxH.pop();
+	return maxH.poll();
 }
 debugger;
 console.log('연습문제 3.배열에서 K번째로 가장 큰 값 찾기');
-getKthBiggestElement(array2, 2); // 23
-getKthBiggestElement(array2, 1); // 40
-getKthBiggestElement(array2, 7); // 2
+//minH.items => "40,4,23,3,2,12,13"
+//bubble down을 하기 때문에 위 items에서 순서를 카운트해서 답을 찾으려면 맞지 않는다.
+//3.MaxHeap의 poll 과정 적어 놓은것 확인해보자
+console.log(getKthBiggestElement(array2, 2)); // 23
+console.log(getKthBiggestElement(array2, 1)); // 40
+console.log(getKthBiggestElement(array2, 7)); // 2
