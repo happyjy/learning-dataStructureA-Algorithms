@@ -1,20 +1,27 @@
 console.log('### Heap');
 
-/**
- * 아래 세개의 기능이 구현 되어 있다. (MedianHeap 제외)
- * [o] # 1.Heap
- * [o] # 2.MinHeap
- * [o] # 3.MaxHeap
- * [o] # 4.힙정렬
- * 
- * # 연습 문제
- *  * 1.일련의 숫자에서 중간 값찾기
- *  * 2.배열에서 K번째로 가장 작은 값 찾기 
- *  * 3.배열에서 K번째로 가장 큰 값 찾기
- * 
+/*
+  * 트리같은 구조지만 배열로 구조로 되어 있다.
+
+  # 아래 네개의 기능이 구현 되어 있다. (MedianHeap 제외)
+    # 1. Heap
+    # 2. MinHeap
+      : Root가 자식보다 작다.
+    # 3. MaxHeap
+      : Root가 자식보다 크다.
+    # 4. 힙정렬
+      * 오름차순: MinHeap으로 add한 data를 poll 했을 떄  
+      * 내림차순: MaxHeap으로 add한 data를 poll 했을 떄  
+  
+  # 연습문제
+    * 연습문제 1.일련의 숫자에서 중간 값찾기
+      * MedianHeap
+    * 연습문제 2.배열에서 K번째로 가장 작은 값 찾기 
+    * 연습문제 3.배열에서 K번째로 가장 큰 값 찾기
+
  */
 
-// # 1.Heap
+// # 1. Heap
 function Heap() {
 	this.items = [];
 }
@@ -58,7 +65,7 @@ Heap.prototype.size = function() {
 	return this.items.length;
 };
 
-// # 2.MinHeap
+// # 2. MinHeap
 function MinHeap() {
 	this.items = [];
 }
@@ -118,7 +125,7 @@ console.log(mh1.poll()); // 8, [8, 100, 10] -> poll -> [10, 100] -> bubbleDown -
 console.log(mh1.poll()); // 10, [10, 100] -> poll -> [100] -> bubbleDown -> [100]
 console.log(mh1.poll()); // 100, [100] -> poll -> [] -> bubbleDown -> []
 
-// # 3.MaxHeap
+// # 3. MaxHeap
 function MaxHeap() {
 	this.items = [];
 }
@@ -174,7 +181,7 @@ console.log(mh2.poll()); // 8
 console.log(mh2.poll()); // 5
 console.log(mh2.poll()); // 1
 
-//# 4.힙정렬
+//# 4. 힙정렬
 /**
  * # 정렬된 배열(Heap class add function으로 추가된 배열)을 
  *  pop()으로 호출하면서 꺼낸 객체를 저장하기만 하면 된다.
