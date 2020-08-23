@@ -5,6 +5,13 @@ console.log('### Heap');
 
   # 아래 네개의 기능이 구현 되어 있다. (MedianHeap 제외)
     # 1. Heap
+        아래 기능 구현
+      ```
+        swap
+        parentIndex, leftChildIndex, rightChildIndex
+        parent, leftChild, rightChild
+        peek, size
+      ```
     # 2. MinHeap
       : Root가 자식보다 작다.
     # 3. MaxHeap

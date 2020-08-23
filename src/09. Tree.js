@@ -2,23 +2,28 @@ console.log('### Tree');
 /*
   # 8.1. Tree 순회
     * BinaryTree 클래스 
+      : 3종류 순회(preOrder, inOrder, postOrder) 각각 recursive, iterator 버전이 있음.
+
       - traversePreOrder  
         : 재귀 호출 방법으로 아래 traversePreOrderHelper 함수 호출
-      - traversePreOrderHelper
+        - traversePreOrderHelper
       - traversePreOrderIterative
 
       - traverseInOrder
         : 재귀 호출 방법으로 아래 traverseInOrderHelper 함수 호출
-      - traverseInOrderHelper
+        - traverseInOrderHelper
       - traverseInOrderIterative
+
+      - traversePostOrder
+        : 재귀 호출 방법으로 아래 traversePostOrderHelper 함수 호출
+        - traversePostOrderHelper
+      - traversePostOrderIterative
       
       - traverseLevelOrder
-        : 단계순위 순회(너비 우선 검색(BFS - breadth first search)
+        : 단계순위 순회(== 너비 우선 검색(BFS - breadth first search)
 
-    * preOrder, inOrder, postOrder, 단계순위 순회(BFS-Breadth first search)
-      - 각각 recursive, iterator 버전이 있음.
+    
   # 8.2. BinarySearchTree 클래스 (extends BinaryTree)
-    * 이진 트리 검색 
     * insert
     * remove(deleteRecursively, findMin)
     * findNode

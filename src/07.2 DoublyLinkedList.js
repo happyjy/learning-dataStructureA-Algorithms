@@ -3,46 +3,31 @@ console.log('### DoublyLinkedList');
 /*
   # 7. 연결리스트
   ## 7.2 이중 연결 리스트
-    * 7.2.1 원하는 위치항목 삽입하기
-    * 7.2.2 헤드에 항목 삽입하기
-    * 7.2.3 테일에 항목 삽입하기
+    * 7.2.0 연결 리스트 Empty 체크 - isEmpty
+
+    * 7.2.1 원하는 위치항목 삽입하기 - insert
+    * 7.2.2 헤드에 항목 삽입하기 - insertAtHead
+    * 7.2.3 테일에 항목 삽입하기 - insertAtTail
      
-    * 7.2.4 원하는 위치항목 삭제하기(recursive - node value 기준)
-    * 7.2.5 헤드의 항목 삭제하기
-    * 7.2.6 테일의 항목 삭제하기
-     
-    * 7.2.7 원하는 위치항목 삭제하기(loop - node position 기준)
-    * 7.2.8 헤드의 항목 삭제하기
-    * 7.2.9 테일의 항목 삭제하기
-    
-    * 7.2.10 원하는 value 찾기 (head로 부터)
-    * 7.2.11 원하는 value 찾기 (tail로 부터)
-    
-    
-  # SinglyLinkedList 구현 목록 
-    * isEmpty
-    * 7.2.1 insert
-    * 7.2.2 insertAtHead
-    * 7.2.3 insertAtTail
-    
-    * 7.2.4 delete 
+    * 7.2.4 원하는 위치항목 삭제하기(recursive - node value 기준) - delete
       - Node 값 기준으로 삭제
-      - recursiveDelFromHead, recursiveDelFromTail 호출
-    * 7.2.5 recursiveDelFromHead
-    * 7.2.6 recursiveDelFromTail
-  
-    * 7.2.7 deleteAt 
+      - recursiveDelFromHead, recursiveDelFromTail 호출로 Head, Tail 제거 
+    * 7.2.4.1 헤드의 항목 삭제하기 - recursiveDelFromHead
+    * 7.2.4.2 테일의 항목 삭제하기 - recursiveDelFromTail
+     
+    * 7.2.5 원하는 위치항목 삭제하기(iterator - node position 기준) - deleteAt
       - Node 위치 기준으로 삭제
       - deleteAtHead, deleteAtTail 호출
-    * 7.2.8 deleteAtHead
-    * 7.2.9 deleteAtTail
+    * 7.2.5.1 헤드의 항목 삭제하기 - deleteAtHead
+    * 7.2.5.2 테일의 항목 삭제하기 - deleteAtTail
     
-    * 7.2.10 findStartingHead
-    * 7.2.11 findStartingTail
-    * 
-    * printFromHead
-    * printFromTail
-    * isSameHeadTailStatus
+    * 7.2.6 원하는 value 찾기 (head로 부터) - findStartingHead
+    * 7.2.7 원하는 value 찾기 (tail로 부터) - findStartingTail
+    
+    * 7.2.8 첫 노드 head 부터 노트 프린트 - printFromHead
+    * 7.2.9 마지막 노드 tail 부터 노드 프린트 - printFromTail
+    * 7.2.10 Head, Tail Node 같은지 확인 - isSameHeadTailStatus
+    
  */
 
 class DoublyLinkedListNode {

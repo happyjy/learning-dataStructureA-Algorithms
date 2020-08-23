@@ -4,25 +4,15 @@ console.log('### SinglyLinkedList');
 
 /*
   # 7. 연결리스트
-  ## 7.1 단일 연결 리스트
-    * 7.1.1 삽입(position 입력)
-    * 7.1.2 삽입(at head)
-    * 7.1.3 삽입(at tail)
+  ## 7.1 단일 연결 리스트 구현 목록
+    * 7.1.1 삽입(position 입력) - insert
+    * 7.1.2 삽입(at head) - insertAtHead
+    * 7.1.3 삽입(at tail) - insertAtTail
     
-    * 7.1.4 삭제(by value)
-    * 7.1.5 삭제(by position)
-    * 7.1.6 삭제(by head)
-    * 7.1.7 삭제(by tail)
-    
-  # SinglyLinkedList 구현 목록 
-    * 7.1.1 insert
-    * 7.1.2 insertAtHead
-    * 7.1.3 insertAtTail
-    
-    * 7.1.4 remove
-    * 7.1.5 removeAt
-    * 7.1.6 removeAtHead
-    * 7.1.7 removeAtTail
+    * 7.1.4 삭제(by value) - remove
+    * 7.1.5 삭제(by position) - removeAt
+    * 7.1.6 삭제(by head) - removeAtHead
+    * 7.1.7 삭제(by tail) - removeTail
     
     * print
     * getPrototypeList
